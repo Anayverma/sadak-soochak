@@ -1,9 +1,8 @@
 "use client"
-
 import { useState, useEffect } from 'react';
 import { Image } from 'cloudinary-react';
 import "../../public/styles/form.css";
-import  Post from "../../models/Post.js";
+import "../../public/styles/home.css";
 
 const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
@@ -22,7 +21,7 @@ export default function Home() {
     formData.append('file', file);
     formData.append('upload_preset', 'ss-images');
     try {
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+      const response = await fetch("https://api.cloudinary.com/v1_1/${cloudName}/image/upload", {
         method: 'POST',
         body: formData,
       });
@@ -50,11 +49,10 @@ export default function Home() {
       if (response.ok) {
         const data = await response.json();
         setDisplayMessage({ message: 'Data submitted successfully!', imageUrl: cloudinaryUrl });
-        setResultImageUrl(null); // Resetting resultImageUrl
+        setResultImageUrl(null);
         setTimeout(() => {
           setDisplayMessage(null);
         }, 10000);
-        // Another POST request after successful form submission
         const secondResponse = await fetch('/api/anotherApi', {
           method: 'POST',
           headers: {
@@ -66,28 +64,6 @@ export default function Home() {
           const secondData = await secondResponse.json();
           console.log('Result Image URL:', secondData.resultImageUrl);
           setResultImageUrl(secondData.resultImageUrl);
-  
-          try {
-            const response = await fetch('/api/savePost', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({name, location}),
-            });
-    
-            if (!response.ok) {
-                console.log(response.body);
-                throw new Error("Failed to save post.");
-            }
-    
-            const result = await response.json();
-            console.log("Post saved successfully:", result.post);
-        } catch (error) {
-            console.error("Error saving post:", error);
-        }
-  
-  
         } else {
           console.log('Error in second POST request');
         }
@@ -97,7 +73,7 @@ export default function Home() {
     } catch (error) {
       console.error('Error occurred:', error);
     }
-  };  
+  };
 
   useEffect(() => {
     if (displayMessage) {
@@ -110,6 +86,7 @@ export default function Home() {
 
   return (
     <main className="container mx-auto p-4 relative">
+      <h1>Grievances</h1>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
         <div className="mb-4">
           <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
