@@ -1,7 +1,9 @@
 "use client"
+
 import { useState, useEffect } from 'react';
 import { Image } from 'cloudinary-react';
 import "../../public/styles/form.css";
+import  Post from "../../models/Post.js";
 
 const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
@@ -64,6 +66,28 @@ export default function Home() {
           const secondData = await secondResponse.json();
           console.log('Result Image URL:', secondData.resultImageUrl);
           setResultImageUrl(secondData.resultImageUrl);
+  
+          try {
+            const response = await fetch('/api/savePost', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({name, location}),
+            });
+    
+            if (!response.ok) {
+                console.log(response.body);
+                throw new Error("Failed to save post.");
+            }
+    
+            const result = await response.json();
+            console.log("Post saved successfully:", result.post);
+        } catch (error) {
+            console.error("Error saving post:", error);
+        }
+  
+  
         } else {
           console.log('Error in second POST request');
         }
@@ -73,7 +97,7 @@ export default function Home() {
     } catch (error) {
       console.error('Error occurred:', error);
     }
-  };
+  };  
 
   useEffect(() => {
     if (displayMessage) {
