@@ -1,0 +1,18 @@
+.input-style {
+    background-color: white;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #1F2937;
+    width: 100%;
+    box-shadow: 0px 0px 6px rgba(255,255,255, 0.8);
+  }
+  
+  .input-style:focus {
+    outline: none;
+    border-color: #2563EB;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 0px 0px 3px rgba(37, 99, 235, 0.3);
+  }
+  
