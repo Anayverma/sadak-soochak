@@ -1,13 +1,12 @@
+import connectDB from "@/lib/mongodb";
 import { NextResponse } from "next/server";
-import connect from "../../../../db";
 
 export const POST = async(request)=>{
     try {
-     await connect();   
-     return new NextResponse()
+        await connectDB();
+     return NextResponse.json({message :"I am working properly"})
     } catch (error) {
         console.log(error)
-
         return new NextResponse.json({error});
     }
 }

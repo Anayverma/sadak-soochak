@@ -3,7 +3,7 @@ import Post from "../../../../models/Post";
 
 export async function POST(req) {
     try {
-        const { name, location } = req.body; // Destructure name and location from the request body
+        const { name, location,image } = req.json(); 
 
         const post = new Post({
             name,
@@ -12,7 +12,7 @@ export async function POST(req) {
 
         const response = await post.save();
         console.log("Post saved successfully:", response);
-        return new NextResponse.json({ post }); // Return the saved post in the response
+        return new NextResponse.json({ post }); 
     } catch (error) {
         console.error("Error saving post:", error);
         return new NextResponse.json({ error: "An error occurred while saving the post." }); // Return an error response

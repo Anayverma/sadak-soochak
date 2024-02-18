@@ -19,9 +19,9 @@ export default function Home() {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'ss-images');
+    formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET);
     try {
-      const response = await fetch("https://api.cloudinary.com/v1_1/${cloudName}/image/upload", {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -53,7 +53,7 @@ export default function Home() {
         setTimeout(() => {
           setDisplayMessage(null);
         }, 10000);
-        const secondResponse = await fetch('/api/anotherApi', {
+        const secondResponse = await fetch('http://127.0.0.1:5000/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -64,6 +64,24 @@ export default function Home() {
           const secondData = await secondResponse.json();
           console.log('Result Image URL:', secondData.resultImageUrl);
           setResultImageUrl(secondData.resultImageUrl);
+
+          const finalResponse = await fetch("/api/savePost",{
+            method: 'POST',
+            headers:{
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+              name,
+              location,image: resultImageUrl
+            }),
+          });
+          if(finalResponse.ok){
+              const finalData=await finalResponse.json();
+              console.log("Final --",finalData);
+          }
+          else{
+            console.log("final api error",error)
+          }
         } else {
           console.log('Error in second POST request');
         }
@@ -85,7 +103,7 @@ export default function Home() {
   }, [displayMessage]);
 
   return (
-    <main className="container mx-auto p-4 relative">
+    <main className="container mx-auto p-4 relative mainhead ">
       <h1>Grievances</h1>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
         <div className="mb-4">
@@ -134,7 +152,7 @@ export default function Home() {
         {cloudinaryUrl && <Image cloudName={cloudName} publicId={cloudinaryUrl} />}
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded btn "
         >
           Submit
         </button>

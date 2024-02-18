@@ -1,0 +1,36 @@
+.mainhead h1 {
+    font-size: 300%;
+    font-weight: bolder;
+    width: fit-content; 
+    margin: auto; 
+    text-align: center; 
+    background-color: grey;
+    background-image: linear-gradient(to bottom, grey,black);
+    border-radius: 5%;
+
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+}
+
+
+.btn {
+    background-image: linear-gradient(to bottom, black, grey);
+    color: white;
+    /* Text color */
+    padding: 10px 20px;
+    /* Adjust padding as needed */
+    border: none;
+    /* Remove border */
+    cursor: pointer;
+    /* Show pointer cursor on hover */
+    transition: background-image 0.3s;
+    /* Smooth transition */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.btn:hover {
+    background-image: linear-gradient(to bottom, grey, white);
+}
