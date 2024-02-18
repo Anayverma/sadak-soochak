@@ -13,10 +13,9 @@ const postSchema = new Schema({
     },
     image: {
         type: String,
-        required: true,
+        required: true
     }
 }, { timestamps: true });
 
-const Post = mongoose.model("Post", postSchema);
-
+const Post = mongoose.models.Post || mongoose.model('Post', postSchema);
 export default Post;

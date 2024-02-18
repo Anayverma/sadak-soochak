@@ -1,4 +1,4 @@
-import connectDB from "@/lib/mongodb";
+import connectDB from "@/lib/database";
 import { NextResponse } from "next/server";
 
 export const POST = async(request)=>{
